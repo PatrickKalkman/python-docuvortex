@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "python-docuvortex"
+version = "0.1.0"
+description = ""
+authors = ["Patrick Kalkman <patrick@simpletechture.nl>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "python_docuvortex"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+openapi = "^1.1.0"
+langchain = "^0.0.177"
+faiss-cpu = "^1.7.4"
+python-dotenv = "^1.0.0"
+pypdf = "^3.9.0"
+openai = "^0.27.7"
+tiktoken = "^0.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
