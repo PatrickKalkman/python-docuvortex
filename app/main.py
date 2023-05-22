@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 from langchain.document_loaders import PyPDFLoader
 from langchain.vectorstores import FAISS
 from langchain.embeddings.openai import OpenAIEmbeddings
-
+from langchain.llms import OpenAI
+from langchain.chains import RetrievalQA
 
 # load the .env file
 load_dotenv()
@@ -18,8 +19,10 @@ pages = loader.load_and_split()
 
 embeddings = OpenAIEmbeddings()
 
-faiss_index = FAISS.from_documents(pages, embeddings)
-docs = faiss_index.similarity_search("What is the best way to optimize photosynthesis",
-                                     k=2)
-for doc in docs:
-    print(str(doc.metadata["page"]) + ":", doc.page_content[:300])
+vector_store = FAISS.from_documents(pages, embeddings)
+qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff",
+                                 retriever=vector_store.as_retriever())
+
+query = "What is Photosynthetic Active Radiation?"
+result = qa.run(query)
+print(result)
