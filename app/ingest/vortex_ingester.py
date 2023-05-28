@@ -4,7 +4,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from loguru import logger
 
 from settings import COLLECTION_NAME, PERSIST_DIRECTORY
-from vortex_pdf_parser import VortexPdfParser
+from .vortex_pdf_parser import VortexPdfParser
 
 
 class VortexIngester:
