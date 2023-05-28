@@ -1956,17 +1956,6 @@ full = ["Pillow", "PyCryptodome"]
 image = ["Pillow"]
 
 [[package]]
-name = "pypdf4"
-version = "1.27.0"
-description = "PDF toolkit"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "PyPDF4-1.27.0.tar.gz", hash = "sha256:7c932441146d205572f96254d53c79ea2c30c9e11df55a5cf87e056c7b3d7f89"},
-]
-
-[[package]]
 name = "pyreadline3"
 version = "3.4.1"
 description = "A python implementation of GNU readline."
@@ -2991,4 +2980,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a0d1d0bc15415d0818dd8e756f203db88979db0ae2e3290488eff444389e78eb"
+content-hash = "f813e6f31c5133fd7a8e7404aad06391f7a9a264386d4aa7404cedddf71566d8"

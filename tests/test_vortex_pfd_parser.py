@@ -1,10 +1,8 @@
+from datetime import date
 import pytest
 
-import logging
+from app.ingest.vortex_pdf_parser import VortexPdfParser
 
-from app.ingest.vortext_pdf_parser import VortexPdfParser
-
-LOGGER = logging.getLogger(__name__)
 
 @pytest.fixture
 def pdf_file():
@@ -16,7 +14,7 @@ def test_extract_metadata_from_pdf(pdf_file):
     metadata = parser.extract_metadata_from_pdf()
     assert (metadata['title'] == "Cyber Security Threats in Cloud: Literature Review")
     assert ('Almaiah' in metadata['author'])
-    assert ('20210615' in metadata['creation_date'])
+    assert ('2021-06-15' in metadata['creation_date'])
 
 
 def test_extract_pages_from_pdf(pdf_file):
@@ -31,7 +29,7 @@ def test_parse_pdf(pdf_file):
     pages, metadata = parser.parse_pdf()
     assert (metadata['title'] == "Cyber Security Threats in Cloud: Literature Review")
     assert ('Almaiah' in metadata['author'])
-    assert ('20210615' in metadata['creation_date'])
+    assert ('2021-06-15' in metadata['creation_date'])
     assert (len(pages) == 8)
     assert ('collection of most\n352 studies are remained' in pages[0][1])
 
