@@ -5,7 +5,7 @@ description = ""
 authors = ["Patrick Kalkman <patrick@simpletechture.nl>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "python_docuvortex"}]
+packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
