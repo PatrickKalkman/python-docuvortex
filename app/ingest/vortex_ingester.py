@@ -15,7 +15,7 @@ class VortexIngester:
     def ingest(self):
         chunks = self.vortext_pdf_parser.clean_text_to_docs()
         logger.info(f"Extracted {len(chunks)} chunks from PDF")
-        embeddings = OpenAIEmbeddings()
+        embeddings = OpenAIEmbeddings(client=None)
         logger.info("Loaded embeddings")
         vector_store = Chroma.from_documents(
             chunks,

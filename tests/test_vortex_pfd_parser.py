@@ -1,4 +1,3 @@
-from datetime import date
 import pytest
 
 from app.ingest.vortex_pdf_parser import VortexPdfParser

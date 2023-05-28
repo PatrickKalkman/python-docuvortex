@@ -16,10 +16,11 @@ class VortexQuery:
 
     def make_chain(self):
         model = ChatOpenAI(
-            model_name="gpt-3.5-turbo",
-            temperature="0",
+            client=None,
+            model="gpt-3.5-turbo",
+            temperature=0,
         )
-        embedding = OpenAIEmbeddings()
+        embedding = OpenAIEmbeddings(client=None)
 
         vector_store = Chroma(
             collection_name=COLLECTION_NAME,

@@ -1,3 +1,4 @@
+from datetime import date
 import os
 import re
 from typing import Callable, Dict, List, Tuple
@@ -43,9 +44,10 @@ class VortexPdfParser:
             reader = PdfReader(pdf_file)
             metadata = reader.metadata
             return {
-                "title": metadata.title.strip(),
-                "author": metadata.author.strip(),
-                "creation_date": metadata.creation_date.strftime('%Y-%m-%d'),
+                "title": getattr(metadata, 'title', '').strip(),
+                "author": getattr(metadata, 'author', '').strip(),
+                "creation_date": getattr(metadata, 'creation_date',
+                                         date(1900, 1, 1)).strftime('%Y-%m-%d'),
             }
 
     def extract_pages_from_pdf(self) -> List[Tuple[int, str]]:
@@ -55,8 +57,10 @@ class VortexPdfParser:
             return [(i + 1, p.extract_text())
                     for i, p in enumerate(pdf.pages) if p.extract_text().strip()]
 
-    def clean_text(self, pages: List[Tuple[int, str]],
-                   cleaning_functions: List[Callable[[str], str]]) -> List[Tuple[int, str]]:
+    def clean_text(self,
+                   pages: List[Tuple[int, str]],
+                   cleaning_functions: List[Callable[[str], str]]
+                   ) -> List[Tuple[int, str]]:
         """Apply the cleaning functions to the text of each page."""
         logger.info("Cleaning text of each page")
         cleaned_pages = []
