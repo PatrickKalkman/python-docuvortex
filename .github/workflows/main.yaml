@@ -42,3 +42,7 @@ jobs:
     - name: Install semver
       run: |
         python -m pip install semver
+
+    - name: Bump version
+      run: |
+        poetry run pytest

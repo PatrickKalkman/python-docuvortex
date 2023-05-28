@@ -1,6 +1,3 @@
-
-from calendar import c
-from loguru import logger
 import pytest
 
 import logging
