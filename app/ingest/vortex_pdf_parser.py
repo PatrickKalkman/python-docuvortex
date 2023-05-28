@@ -3,11 +3,10 @@ import re
 from typing import Callable, Dict, List, Tuple
 
 import langchain.docstore.document as docstore
-import langchain.embeddings as embeddings
 import langchain.text_splitter as splitter
-import langchain.vectorstores as vectorstores
 import pdfplumber
-import PyPDF4
+from pypdf import PdfReader
+from loguru import logger
 
 
 class VortexPdfParser:
@@ -19,6 +18,18 @@ class VortexPdfParser:
             raise FileNotFoundError(f"File not found: {pdf_file_path}")
         self.pdf_file_path = pdf_file_path
 
+    def clean_text_to_docs(self) -> List[docstore.Document]:
+        raw_pages, metadata = self.parse_pdf()
+
+        cleaning_functions: List = [
+            self.merge_hyphenated_words,
+            self.fix_newlines,
+            self.remove_multiple_newlines,
+        ]
+
+        cleaned_text_pdf = self.clean_text(raw_pages, cleaning_functions)
+        return self.text_to_docs(cleaned_text_pdf, metadata)
+
     def parse_pdf(self) -> Tuple[List[Tuple[int, str]], Dict[str, str]]:
         """Extract and return the pages and metadata from the PDF."""
         metadata = self.extract_metadata_from_pdf()
@@ -27,17 +38,19 @@ class VortexPdfParser:
 
     def extract_metadata_from_pdf(self) -> Dict[str, str]:
         """Extract and return the metadata from the PDF."""
+        logger.info("Extracting metadata")
         with open(self.pdf_file_path, "rb") as pdf_file:
-            reader = PyPDF4.PdfFileReader(pdf_file)
-            metadata = reader.getDocumentInfo()
+            reader = PdfReader(pdf_file)
+            metadata = reader.metadata
             return {
-                "title": metadata.get("/Title", "").strip(),
-                "author": metadata.get("/Author", "").strip(),
-                "creation_date": metadata.get("/CreationDate", "").strip(),
+                "title": metadata.title.strip(),
+                "author": metadata.author.strip(),
+                "creation_date": metadata.creation_date.strftime('%Y-%m-%d'),
             }
 
     def extract_pages_from_pdf(self) -> List[Tuple[int, str]]:
         """Extract and return the text of each page from the PDF."""
+        logger.info("Extracting pages")
         with pdfplumber.open(self.pdf_file_path) as pdf:
             return [(i + 1, p.extract_text())
                     for i, p in enumerate(pdf.pages) if p.extract_text().strip()]
@@ -45,6 +58,7 @@ class VortexPdfParser:
     def clean_text(self, pages: List[Tuple[int, str]],
                    cleaning_functions: List[Callable[[str], str]]) -> List[Tuple[int, str]]:
         """Apply the cleaning functions to the text of each page."""
+        logger.info("Cleaning text of each page")
         cleaned_pages = []
         for page_num, text in pages:
             for cleaning_function in cleaning_functions:
@@ -70,6 +84,7 @@ class VortexPdfParser:
         doc_chunks = []
 
         for page_num, page in text:
+            logger.info(f"Splitting page {page_num}")
             text_splitter = splitter.RecursiveCharacterTextSplitter(
                 chunk_size=1000,
                 separators=["\n\n", "\n", ".", "!", "?", ",", " ", ""],
