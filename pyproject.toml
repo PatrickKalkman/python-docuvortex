@@ -11,12 +11,29 @@ packages = [{include = "python_docuvortex"}]
 python = "^3.11"
 openapi = "^1.1.0"
 langchain = "^0.0.177"
-faiss-cpu = "^1.7.4"
 python-dotenv = "^1.0.0"
 pypdf = "^3.9.0"
 openai = "^0.27.7"
 tiktoken = "^0.4.0"
+chromadb = "^0.3.25"
+pypdf4 = "^1.27.0"
+pdfplumber = "^0.9.0"
+loguru = "^0.7.0"
 
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.3.0"
+bandit = "^1.7.5"
+pytest = "^7.3.1"
+
+[tool.bandit]
+exclude_dirs = ["tests",]
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore::Warning"]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 
 [build-system]
 requires = ["poetry-core"]

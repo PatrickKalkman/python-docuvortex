@@ -1,12 +1,11 @@
 import os
 
 from dotenv import load_dotenv
-
+from langchain.chains import RetrievalQA
 from langchain.document_loaders import PyPDFLoader
-from langchain.vectorstores import FAISS
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.llms import OpenAI
-from langchain.chains import RetrievalQA
+from langchain.vectorstores import FAISS
 
 # load the .env file
 load_dotenv()
