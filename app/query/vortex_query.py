@@ -1,9 +1,9 @@
-from langchain.vectorstores.chroma import Chroma
+from dotenv import load_dotenv
+from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.chains import ConversationalRetrievalChain
-from langchain.schema import HumanMessage, AIMessage
-from dotenv import load_dotenv
+from langchain.schema import AIMessage, HumanMessage
+from langchain.vectorstores.chroma import Chroma
 
 from settings import COLLECTION_NAME, PERSIST_DIRECTORY
 

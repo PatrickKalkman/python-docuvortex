@@ -1,20 +1,22 @@
-from datetime import date
 import os
 import re
+from datetime import date
 from typing import Callable, Dict, List, Tuple
 
 import langchain.docstore.document as docstore
 import langchain.text_splitter as splitter
 import pdfplumber
-from pypdf import PdfReader
 from loguru import logger
+from pypdf import PdfReader
+
+from .utils import getattr_or_default
 
 
 class VortexPdfParser:
     """A parser for extracting and cleaning text from PDF documents."""
 
-    def __init__(self, pdf_file_path: str):
-        """Initialise with the path to the PDF file."""
+    def set_pdf_file_path(self, pdf_file_path: str):
+        """Set the path to the PDF file."""
         if not os.path.isfile(pdf_file_path):
             raise FileNotFoundError(f"File not found: {pdf_file_path}")
         self.pdf_file_path = pdf_file_path
@@ -43,11 +45,14 @@ class VortexPdfParser:
         with open(self.pdf_file_path, "rb") as pdf_file:
             reader = PdfReader(pdf_file)
             metadata = reader.metadata
+            logger.info(f"{getattr(metadata, 'title', 'no title')}")
+            default_date = date(1900, 1, 1)
             return {
-                "title": getattr(metadata, 'title', '').strip(),
-                "author": getattr(metadata, 'author', '').strip(),
-                "creation_date": getattr(metadata, 'creation_date',
-                                         date(1900, 1, 1)).strftime('%Y-%m-%d'),
+                "title": getattr_or_default(metadata, 'title', '').strip(),
+                "author": getattr_or_default(metadata, 'author', '').strip(),
+                "creation_date": getattr_or_default(metadata,
+                                                    'creation_date',
+                                                    default_date).strftime('%Y-%m-%d'),
             }
 
     def extract_pages_from_pdf(self) -> List[Tuple[int, str]]:
@@ -85,7 +90,7 @@ class VortexPdfParser:
     def text_to_docs(self, text: List[Tuple[int, str]],
                      metadata: Dict[str, str]) -> List[docstore.Document]:
         """Split the text into chunks and return them as Documents."""
-        doc_chunks = []
+        doc_chunks: List[docstore.Document] = []
 
         for page_num, page in text:
             logger.info(f"Splitting page {page_num}")
