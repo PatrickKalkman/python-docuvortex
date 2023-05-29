@@ -2,7 +2,7 @@
 
 ## Leveraging the Power of Large Language Models and the Langchain Framework for an Innovative Approach to Document Querying
 
-This project aims to implement a document-based question-answering system using the power of OpenAI's GPT-3.5 Turbo model, Python, and the Langchain Framework. It processes PDF documents, breaking them into ingestible chunks, and then stores these chunks into a Chroma DB vector database for querying. It complements a Medium article called ().
+This project aims to implement a document-based question-answering system using the power of OpenAI's GPT-3.5 Turbo model, Python, and the Langchain Framework. It processes PDF documents, breaking them into ingestible chunks, and then stores these chunks into a Chroma DB vector database for querying. It complements a Medium article called [Howto Build a Document-Based Q&A System Using OpenAI and Python](https://medium.com/@pkalkman).
 
 ## Getting Started
 
@@ -17,25 +17,26 @@ To install the project, you need to have [Python](https://www.python.org/downloa
 The project uses [Poetry](https://python-poetry.org/) for managing dependencies. After cloning the repository, navigate to the project directory and install dependencies with the following commands:
 
 ```bash
-poetry shell
 poetry install
+poetry shell
 ```
 
-### Running the Application
-Ingesting Documents
-To ingest documents, place your PDF files in the 'docs' folder and run the following command:
+## Running the Application
+Before you can run ingesting or querying you have to make sure that a .env file exists. This file should have a single line that read ```OPENAI_API_KEY=yourkey```
+
+### Ingesting Documents
+To ingest documents, place your PDF files in the 'docs' folder make sure that you are in the app folder and run the following command:
 
 ```bash
-Copy code
+cd app
 python ingest.py
 ```
 
 ### Querying Documents
-To query the ingested documents, run the following command and follow the interactive prompts:
+To query the ingested documents, make sure that you are in the app folder, run the following command and follow the interactive prompts:
 
 ```
 bash
-Copy code
 python query.py
 ```
 
@@ -43,20 +44,19 @@ python query.py
 To visualize and interact with the system via the Streamlit app, run the following command:
 
 ```bash
-Copy code
 streamlit run streamlit_app.py
 ```
 
 ### Authors
-[Patrick Kalkman](Your GitHub link)
+[Patrick Kalkman](https://github.com/PatrickKalkman)
 
 ### License
 This project is licensed under the MIT license - see the LICENSE.md file for details
 
 ### Acknowledgments
-- Langchain Framework
-- OpenAI
-- Chroma DB
-- Streamlit
+- [Langchain Framework](https://python.langchain.com/en/latest/index.html)
+- [OpenAI](https://openai.com/)
+- [Chroma DB](https://www.trychroma.com/)
+- [Streamlit](https://streamlit.io/)
 
 
