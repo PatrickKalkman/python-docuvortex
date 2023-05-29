@@ -15,7 +15,7 @@ class VortexIngester:
     def __init__(self, content_folder: str):
         self.content_folder = content_folder
 
-    def ingest(self):
+    def ingest(self) -> None:
         vortex_content_iterator = VortexContentIterator(self.content_folder)
         vortex_pdf_parser = VortexPdfParser()
 
