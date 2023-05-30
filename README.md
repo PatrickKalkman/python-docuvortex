@@ -5,7 +5,7 @@
 ![DocuVortex](/vortex.png "DocuVortex")
 
 
-This project aims to implement a document-based question-answering system using the power of OpenAI's GPT-3.5 Turbo model, Python, and the Langchain Framework. It processes PDF documents, breaking them into ingestible chunks, and then stores these chunks into a Chroma DB vector database for querying. It complements a Medium article called [Howto Build a Document-Based Q&A System Using OpenAI and Python](https://medium.com/@pkalkman).
+This project aims to implement a document-based question-answering system using the power of OpenAI's GPT-3.5 Turbo model, Python, and the Langchain Framework. It processes PDF documents, breaking them into ingestible chunks, and then stores these chunks into a Chroma DB vector database for querying. It complements a Medium article called [Howto Build a Document-Based Q&A System Using OpenAI and Python](https://medium.com/itnext/how-to-build-a-document-based-q-a-system-using-openai-and-python-17d1c3cc2081).
 
 ## Getting Started
 
